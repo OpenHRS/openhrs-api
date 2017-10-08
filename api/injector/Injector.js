@@ -102,21 +102,23 @@ module.exports = class Injector {
      * @param {*} factory - factory object to add.
      */
     addFactory(name, factory) {
+        let that = this;
+
         let args = this.getArgs(factory),
             params = [];
 
-        if (this.getFactory(name) !== null || 
-            this.getService(name) !== null) {
+        if (that.getFactory(name) !== null || 
+            that.getService(name) !== null) {
             console.error("ERROR " + name +  
                 " already in use by service/factory!")
             process.exit(1);
         }
 
         args.forEach(function(arg) {
-            console.log(this.getFactory(arg));
-            if (this.getFactory(arg)) {
+            console.log(that.getFactory(arg));
+            if (that.getFactory(arg)) {
                 params.push(getFactory(arg));
-            } else if (this.getService(arg)) {
+            } else if (that.getService(arg)) {
                 params.push(getService(arg));
             } else {
                 console.error("ERROR '" + arg + "' does not exist!")
@@ -124,9 +126,9 @@ module.exports = class Injector {
             }
         });
 
-        if (this.isFunction(factory))
-            this.factories[name] = factory(...params);
+        if (that.isFunction(factory))
+            that.factories[name] = factory(...params);
         else
-            this.factories[name] = factory;
+            that.factories[name] = factory;
     }
 };
