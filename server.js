@@ -8,6 +8,8 @@ let app = express(),
     statuteModel = require('./api/models/statuteModel')
     locationModel = require('./api/models/locationModel')
 
+/* initialize services */
+require('./api/manager');
     
 mongoose.Promise = require('bluebird');
 mongoose.connect(uri, {useMongoClient: true})
@@ -16,11 +18,10 @@ mongoose.connect(uri, {useMongoClient: true})
 
 let routes = require('./api/routes/routes.js');
 
-
 app.use(function(req, res, next){
-res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 app.use(bodyParser.json())
