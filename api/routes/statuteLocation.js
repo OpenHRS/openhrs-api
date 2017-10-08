@@ -3,7 +3,7 @@
 let express = require('express'),
     router  = express.Router();
 
-let hrsLocationService = require('../../services/hrsLocationService.js');
+let hrsLocationService = require('../services/hrsLocationService.js');
 
 router.route('/')
 	.get(hrsLocationService.listAllLocations)

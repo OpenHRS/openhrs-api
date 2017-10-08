@@ -2,7 +2,7 @@ let express = require('express'),
     router  = express.Router(),
     childRouter = express.Router({mergeParams: true});
 
-let hrsService = require('../../services/hrsService.js');
+let hrsService = require('../services/hrsService.js');
 
 router.use('/:title/chapter', childRouter);
 

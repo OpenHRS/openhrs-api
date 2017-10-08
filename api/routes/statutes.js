@@ -3,8 +3,8 @@
 let express = require('express'),
     router  = express.Router();
 
-let hrsService = require('../../services/hrsService.js'),
-    ElasticSearch = require('../../services/ElasticSearch.js');
+let hrsService = require('../services/hrsService.js'),
+    ElasticSearch = require('../services/ElasticSearch.js');
 
 router.route('/')
 	.get(hrsService.listAllStatutes);
