@@ -15,6 +15,9 @@ module.exports = class Injector {
         
         // routes
         this.routes = [];
+
+        // get list of installed packages
+        this.packages = require('../../package.json')["dependencies"];
     }
 
     /**
@@ -77,11 +80,11 @@ module.exports = class Injector {
      * @return {service|factory} a factory or service.
      */
     getDepedency(depedency) {
-        if (getService(depedency))
-            return getService(depedency);
+        if (this.getService(depedency))
+            return this.getService(depedency);
 
-        if (getFactory(depedency))
-            return getFactory(depedency);
+        if (this.getFactory(depedency))
+            return this.getFactory(depedency);
         
         return null;
     }
@@ -114,21 +117,23 @@ module.exports = class Injector {
             process.exit(1);
         }
 
+        // really cheap fix for npm packages or config file...
+        if (that.packages[name] !== undefined || name === 'config') {
+            this.factories[name] = factory;
+            return;
+        }
+
         args.forEach(function(arg) {
-            console.log(that.getFactory(arg));
             if (that.getFactory(arg)) {
-                params.push(getFactory(arg));
+                params.push(that.getFactory(arg));
             } else if (that.getService(arg)) {
-                params.push(getService(arg));
+                params.push(that.getService(arg));
             } else {
                 console.error("ERROR '" + arg + "' does not exist!")
                 process.exit(1);
             }
         });
 
-        if (that.isFunction(factory))
-            that.factories[name] = factory(...params);
-        else
-            that.factories[name] = factory;
+        that.factories[name] = factory(...params);
     }
 };

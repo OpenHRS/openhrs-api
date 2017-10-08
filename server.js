@@ -10,11 +10,6 @@ let app = express(),
 
 /* initialize services */
 require('./api/manager');
-    
-mongoose.Promise = require('bluebird');
-mongoose.connect(uri, {useMongoClient: true})
-  .then(({db: {databaseName}}) => console.log(`Connected to ${databaseName}`))
-  .catch(err => console.error(err));
 
 let routes = require('./api/routes/routes.js');
 

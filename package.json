@@ -16,7 +16,8 @@
     "elasticsearch": "^13.3.1",
     "express": "^4.15.4",
     "memory-cache": "^0.2.0",
-    "mongoose": "^4.11.9"
+    "mongoose": "^4.11.9",
+    "package-list": "0.0.3"
   },
   "devDependencies": {
     "jasmine": "^2.8.0"
