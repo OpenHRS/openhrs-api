@@ -1,37 +1,20 @@
-'use strict';
-
 /**
- * Service for elasticsearch.
+ * @file SearchService.js
+ * 
+ * Contains methods for searching hrs documents.
+ * 
  * @author Jonathan Robello
  */
 
-let bluebird = require('bluebird'),
-    elasticsearch  = require('elasticsearch');
+module.exports = function(elastic_client) {
 
-let uri = process.env.ELASTIC_URI;
-
-let elasticService = function(Promise, elasticsearch) {
-
-    let client = new elasticsearch.Client({
-        host: process.env.ELASTIC_URI
-    });
-
-    client.ping({
-        // ping usually has a 3000ms timeout 
-        requestTimeout: 1000
-    }, function (error) {
-        if (error) {
-          console.trace('elasticsearch cluster is down!');
-        } else {
-          console.log('elasticsearch client running');
-        }
-    });
+    let client = elastic_client;
 
     /**
-     * @name searchDocs
-     * @desc search for documents close to the given input.
-     * @param req the request object.
-     * @param res the response object
+     * Search for documents close to the given input.
+     * @method searchDocs
+     * @param {*} req - the request object.
+     * @param {*} res - the response object
      */
     let searchDocs = (function(req, res) {
         client.search({
@@ -120,10 +103,10 @@ let elasticService = function(Promise, elasticsearch) {
     });
 
     /**
-     * @name getChapterSection
-     * @desc Gets a single statute by its chapter and section.
-     * @param req the request object.
-     * @param res the response object.
+     * Gets a single statute by its chapter and section.
+     * @method getChapterSection
+     * @param {*} req - the request object.
+     * @param {*} res - the response object.
      */
     let getChapterSection = (function(req, res) {
       client.search({
@@ -151,37 +134,8 @@ let elasticService = function(Promise, elasticsearch) {
         });
     });
 
-    /**
-     * @name getNearestLaws
-     * @desc Get the nearest laws based on lat and long.
-     * @param req the request object.
-     * @param the response object.
-     */
-    /*let getNearestLaws = function(req, res) {
-        client.search({
-            index: 'hrs-locations',
-            body: {
-                "size": req.query.size,
-                "query": {
-                    "bool": {
-                        "must" : {
-                            "match_all": {}
-                        },
-                        "filter"
-                    }
-                }
-            }
-        }).then(function(docs) {
-            res.json(docs.hits.hits);
-        }).catch(function(res) {
-            console.log(res);
-        });
-    }*/
-
     return {
         searchDocs: searchDocs,
         getChapterSection: getChapterSection
     }
-};
-
-module.exports = elasticService(bluebird, elasticsearch);
+}
