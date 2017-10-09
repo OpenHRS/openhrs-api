@@ -3,11 +3,9 @@ let express = require('express');
 let app = express(),
     port = process.env.PORT || 3000,
     bodyParser = require('body-parser');
-    statuteModel = require('./api/models/statuteModel')
-    locationModel = require('./api/models/locationModel')
 
 /* initialize services */
-require('./api/manager');
+let manager = require('./api/manager');
 
 let routes = require('./api/routes/routes.js');
 

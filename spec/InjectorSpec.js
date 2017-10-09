@@ -17,7 +17,9 @@ describe("Injector class test", function() {
                 expect(function() {
                     Injector.addFactory('mongoose-setup',
                         require('../api/services/mongoose-setup'));
-                    }).toThrowError("ERROR 'Promise' does not exist!");
+                }).toThrowError(
+                    "ERROR 'Promise' does not exist!"
+                );
                 done();
             });
 
@@ -94,6 +96,64 @@ describe("Injector class test", function() {
             let depedency = Injector.getDepedency('mongoose-stup');
             expect(depedency).toEqual(null);
             done();
+        });
+    });
+
+    describe("test service methods", function() {
+        describe("add service", function() {
+            
+            // add service with name taken
+            it("should ERROR", function(done) {
+                expect(function() {
+                    Injector.addService('bluebird', require('bluebird'));
+                }).toThrowError(
+                    "ERROR bluebird already in use by service/factory!" 
+                );
+                done();
+            });
+
+            // add dummy service with missing depedency.
+            it("should ERROR", function(done) {
+                expect(function() {
+                    Injector.addService('dummy', function(elasticsearch) {
+                        return this;
+                    });
+                }).toThrowError(
+                    "ERROR 'elasticsearch' does not exist!" 
+                );
+                done();
+            });
+
+            // add new dummy service and inject depedencies.
+            it("should add new service", function(done) {
+                Injector.addService('dummy', function(mongoose, Promise, config) {
+                    return this;
+                });
+                done();
+            });
+        });
+
+        describe("get service", function() {
+
+            // get service
+            it("should return a new service", function(done) {
+                let depedency1 = Injector.getService('dummy');
+                let depedency2 = Injector.getService('dummy');
+
+                // test if new objects
+                expect(depedency1 == depedency2).toEqual(false);
+
+                expect(depedency1).not.toEqual(null);
+                expect(depedency2).not.toEqual(null);
+                done();
+            });
+
+            // get service that not exist
+            it("should return null", function(done) {
+                let depedency = Injector.getService('dumy');
+                expect(depedency).toBe(null);
+                done();
+            });
         });
     });
 });

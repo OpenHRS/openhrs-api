@@ -1,7 +1,5 @@
 'use strict';
 
-let express = require('express');
-
 let routes = [];
 
 routes.push({ url:'/statutes', route:require('./statutes.js') });

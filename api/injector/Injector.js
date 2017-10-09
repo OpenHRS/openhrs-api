@@ -134,4 +134,41 @@ module.exports = class Injector {
 
         that.factories[name] = factory(...params);
     }
+
+    /**
+     * Creates a new service
+     * @method addService
+     * @param {String} name - name of the service.
+     * @param {*} service - service object to add.
+     */
+    addService(name, service) {
+        let that = this;
+        
+        let args = this.getArgs(service),
+            params = [];
+        
+        if (that.getFactory(name) !== null || 
+            that.getService(name) !== null) {
+            throw new Error("ERROR " + name +  
+                " already in use by service/factory!");
+        }
+
+        // really cheap fix for npm packages or config file...
+        if (that.packages[name] !== undefined || name === 'config') {
+            this.factories[name] = service;
+            return;
+        }
+
+        args.forEach(function(arg) {
+            if (that.getFactory(arg)) {
+                params.push(that.getFactory(arg));
+            } else if (that.getService(arg)) {
+                params.push(that.getService(arg));
+            } else {
+                throw new Error("ERROR '" + arg + "' does not exist!")
+            }
+        });
+
+        that.services[name] = service(...params);
+    }
 };
