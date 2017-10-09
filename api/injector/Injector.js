@@ -112,9 +112,8 @@ module.exports = class Injector {
 
         if (that.getFactory(name) !== null || 
             that.getService(name) !== null) {
-            console.error("ERROR " + name +  
-                " already in use by service/factory!")
-            process.exit(1);
+            throw new Error("ERROR " + name +  
+                " already in use by service/factory!");
         }
 
         // really cheap fix for npm packages or config file...
@@ -129,8 +128,7 @@ module.exports = class Injector {
             } else if (that.getService(arg)) {
                 params.push(that.getService(arg));
             } else {
-                console.error("ERROR '" + arg + "' does not exist!")
-                process.exit(1);
+                throw new Error("ERROR '" + arg + "' does not exist!")
             }
         });
 

@@ -2,8 +2,6 @@ let express = require('express');
 
 let app = express(),
     port = process.env.PORT || 3000,
-    uri = process.env.MONGO_URI,
-    mongoose = require('mongoose');
     bodyParser = require('body-parser');
     statuteModel = require('./api/models/statuteModel')
     locationModel = require('./api/models/locationModel')

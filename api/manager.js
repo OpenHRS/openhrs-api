@@ -14,3 +14,5 @@ injector.addFactory('mongoose', require('mongoose'));
 injector.addFactory('Promise', require('./services/Promise'));
 injector.addFactory('config', require('../config'));
 injector.addFactory('mongoose-setup', require('./services/mongoose-setup'));
+
+module.exports = injector;
