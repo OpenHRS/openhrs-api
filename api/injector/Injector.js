@@ -74,17 +74,17 @@ module.exports = class Injector {
     }
 
     /**
-     * Returns a depedency.
+     * Returns a dependency.
      * @method getDepedency
      * @param {String} depedency - name of service or factory
      * @return {service|factory} a factory or service.
      */
-    getDepedency(depedency) {
-        if (this.getService(depedency))
-            return this.getService(depedency);
+    getDependency(dependency) {
+        if (this.getService(dependency))
+            return this.getService(dependency);
 
-        if (this.getFactory(depedency))
-            return this.getFactory(depedency);
+        if (this.getFactory(dependency))
+            return this.getFactory(dependency);
         
         return null;
     }

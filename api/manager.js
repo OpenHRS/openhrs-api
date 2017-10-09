@@ -1,7 +1,7 @@
 /**
  * @file manager.js
  * 
- * Manager for all routes and depedencies.
+ * Manager for all routes and dependencies.
  * 
  * @author Jonathan Robello
  */

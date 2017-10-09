@@ -79,22 +79,22 @@ describe("Injector class test", function() {
 
         // get a package
         it("should return npm package", function(done) {
-            let depedency = Injector.getDepedency('bluebird');
-            expect(depedency).not.toEqual(null);
+            let dependency = Injector.getDependency('bluebird');
+            expect(dependency).not.toEqual(null);
             done();
         });
 
         // get a factory
         it("should return npm package", function(done) {
-            let depedency = Injector.getDepedency('mongoose-setup');
-            expect(depedency).not.toEqual(null);
+            let dependency = Injector.getDependency('mongoose-setup');
+            expect(dependency).not.toEqual(null);
             done();
         });
 
         // get factory/service that not exist
         it("should return null", function(done) {
-            let depedency = Injector.getDepedency('mongoose-stup');
-            expect(depedency).toEqual(null);
+            let dependency = Injector.getDependency('mongoose-stup');
+            expect(dependency).toEqual(null);
             done();
         });
     });
@@ -137,21 +137,21 @@ describe("Injector class test", function() {
 
             // get service
             it("should return a new service", function(done) {
-                let depedency1 = Injector.getService('dummy');
-                let depedency2 = Injector.getService('dummy');
+                let dependency1 = Injector.getService('dummy');
+                let dependency2 = Injector.getService('dummy');
 
                 // test if new objects
-                expect(depedency1 == depedency2).toEqual(false);
+                expect(dependency1 == dependency2).toEqual(false);
 
-                expect(depedency1).not.toEqual(null);
-                expect(depedency2).not.toEqual(null);
+                expect(dependency1).not.toEqual(null);
+                expect(dependency2).not.toEqual(null);
                 done();
             });
 
             // get service that not exist
             it("should return null", function(done) {
-                let depedency = Injector.getService('dumy');
-                expect(depedency).toBe(null);
+                let dependency = Injector.getService('dumy');
+                expect(dependency).toBe(null);
                 done();
             });
         });
