@@ -57,12 +57,43 @@ describe("Injector class test", function() {
                 done();
             });
 
+            // getting a factory
+            it("should return the factory", function(done) {
+                let factory = Injector.getFactory('mongoose-setup');
+                expect(factory).not.toEqual(null);
+                done();
+            });
+
             // should return null if not exist
             it("should return null", function(done) {
                 let factory = Injector.getFactory('express');
                 expect(factory).toEqual(null);
                 done();
             });
+        });
+    });
+
+    describe("test get dependency", function() {
+
+        // get a package
+        it("should return npm package", function(done) {
+            let depedency = Injector.getDepedency('bluebird');
+            expect(depedency).not.toEqual(null);
+            done();
+        });
+
+        // get a factory
+        it("should return npm package", function(done) {
+            let depedency = Injector.getDepedency('mongoose-setup');
+            expect(depedency).not.toEqual(null);
+            done();
+        });
+
+        // get factory/service that not exist
+        it("should return null", function(done) {
+            let depedency = Injector.getDepedency('mongoose-stup');
+            expect(depedency).toEqual(null);
+            done();
         });
     });
 });
