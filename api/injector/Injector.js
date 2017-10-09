@@ -107,7 +107,7 @@ module.exports = class Injector {
     addFactory(name, factory) {
         let that = this;
 
-        let args = this.getArgs(factory),
+        let args = that.getArgs(factory),
             params = [];
 
         if (that.getFactory(name) !== null || 
@@ -144,7 +144,7 @@ module.exports = class Injector {
     addService(name, service) {
         let that = this;
         
-        let args = this.getArgs(service),
+        let args = that.getArgs(service),
             params = [];
         
         if (that.getFactory(name) !== null || 
@@ -170,5 +170,30 @@ module.exports = class Injector {
         });
 
         that.services[name] = service(...params);
+    }
+
+    /**
+     * Create new route.
+     * @method addRoute
+     * @param {String} url - url of route.
+     * @param {*} route - the route.
+     */
+    addRoute(url, route) {
+        let that = this;
+
+        let args = that.getArgs(route),
+            params = [];
+
+        args.forEach(function(arg) {
+            if (that.getFactory(arg)) {
+                params.push(that.getFactory(arg));
+            } else if (that.getService(arg)) {
+                params.push(that.getService(arg));
+            } else {
+                throw new Error("ERROR '" + arg + "' does not exist!")
+            }
+        });
+
+        this.routes.push({ url:url, route:route(...params) });
     }
 };

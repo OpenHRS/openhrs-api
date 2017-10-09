@@ -156,4 +156,46 @@ describe("Injector class test", function() {
             });
         });
     });
+
+    describe("test routing method", function() {
+        describe("get routes", function() {
+
+            // get routes with nothing
+            it("should return empty array", function(done) {
+                let routes = Injector.getRoutes();
+                expect(routes.length).toEqual(0);
+                done();
+            });
+
+            // add route with missing service
+            it("should ERROR", function(done) {
+                expect(function() {
+                    Injector.addRoute('/chapter',
+                        require('../api/routes/statuteChapters'));
+                }).toThrowError(
+                    "ERROR 'express' does not exist!"
+                );
+                done();
+            });
+
+            // add route with depdencies
+            it("should add route", function(done) {
+                Injector.addFactory('statuteModel', 
+                    require('../api/models/statuteModel'));
+                Injector.addFactory('express', require('express'));
+                Injector.addFactory('BrowseService', 
+                    require('../api/services/BrowseService'));
+                Injector.addRoute('/chapter',
+                    require('../api/routes/statuteChapters'));
+                done();
+            });
+
+            // get routes with single route
+            it("should return array with 1 route", function(done) {
+                let routes = Injector.getRoutes();
+                expect(routes.length).toEqual(1);
+                done();
+            });
+        });
+    });
 });

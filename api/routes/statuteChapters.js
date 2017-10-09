@@ -1,18 +1,17 @@
-let express = require('express'),
-    router  = express.Router(),
-    childRouter = express.Router({mergeParams: true});
-
-let hrsService = require('../services/hrsService.js');
-
-router.use('/:chapter/section', childRouter);
-
-router.route('/:chapter')
-	.get(hrsService.listByChapter);
-
-childRouter.route('/')
-	.get(hrsService.listByChapter);
+module.exports = function(express, BrowseService) {
+	let router = express.Router(),
+		childRouter = express.Router({mergeParams: true});
 	
-childRouter.route('/:section')
-	.get(hrsService.listByChapterSection)
-
-module.exports = router;
+	router.use('/:chapter/section', childRouter);
+		
+	router.route('/:chapter')
+		.get(BrowseService.listByChapter);
+		
+	childRouter.route('/')
+		.get(BrowseService.listByChapter);
+			
+	childRouter.route('/:section')
+		.get(BrowseService.listByChapterSection)
+	
+	return router;
+}
