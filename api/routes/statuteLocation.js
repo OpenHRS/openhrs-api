@@ -1,12 +1,11 @@
 'use strict';
 
-let express = require('express'),
-    router  = express.Router();
+module.exports = function(express, LocationService) {
+	let router = express.Router();
 
-let hrsLocationService = require('../services/hrsLocationService.js');
-
-router.route('/')
-	.get(hrsLocationService.listAllLocations)
-	.post(hrsLocationService.postLocation);
-	  
-module.exports = router;
+	router.route('/')
+		.get(LocationService.listAllLocations)
+		.post(LocationService.postLocation);
+	
+	return router;
+}
