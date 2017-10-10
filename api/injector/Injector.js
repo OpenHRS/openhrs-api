@@ -123,13 +123,10 @@ module.exports = class Injector {
         }
 
         args.forEach(function(arg) {
-            if (that.getFactory(arg)) {
-                params.push(that.getFactory(arg));
-            } else if (that.getService(arg)) {
-                params.push(that.getService(arg));
-            } else {
+            if (that.getDependency(arg))
+                params.push(that.getDependency(arg));
+            else
                 throw new Error("ERROR '" + arg + "' does not exist!")
-            }
         });
 
         that.factories[name] = factory(...params);
@@ -160,13 +157,10 @@ module.exports = class Injector {
         }
 
         args.forEach(function(arg) {
-            if (that.getFactory(arg)) {
-                params.push(that.getFactory(arg));
-            } else if (that.getService(arg)) {
-                params.push(that.getService(arg));
-            } else {
+            if (that.getDependency(arg))
+                params.push(that.getDependency(arg));
+            else
                 throw new Error("ERROR '" + arg + "' does not exist!")
-            }
         });
 
         that.services[name] = service(...params);
@@ -185,15 +179,12 @@ module.exports = class Injector {
             params = [];
 
         args.forEach(function(arg) {
-            if (that.getFactory(arg)) {
-                params.push(that.getFactory(arg));
-            } else if (that.getService(arg)) {
-                params.push(that.getService(arg));
-            } else {
+            if (that.getDependency(arg))
+                params.push(that.getDependency(arg));
+            else
                 throw new Error("ERROR '" + arg + "' does not exist!")
-            }
         });
 
-        this.routes.push({ url:url, route:route(...params) });
+        that.routes.push({ url:url, route:route(...params) });
     }
 };
