@@ -5,7 +5,7 @@ let app = express(),
     bodyParser = require('body-parser');
 
 /* initialize services */
-let manager = require('./api/manager');
+let manager = require('./src/manager');
 
 app.use(function(req, res, next){
     res.header("Access-Control-Allow-Origin", "*");

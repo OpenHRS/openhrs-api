@@ -6,7 +6,7 @@
  * @author Jonathan Robello
  */
 
-let Injector = new (require('../api/injector/Injector.js'))();
+let Injector = new (require('../src/injector/Injector.js'))();
 
 describe("Injector class test", function() {
     describe("test factory", function() {
@@ -16,7 +16,7 @@ describe("Injector class test", function() {
             it("should throw ERROR", function(done) {
                 expect(function() {
                     Injector.addFactory('mongoose-setup',
-                        require('../api/services/mongoose-setup'));
+                        require('../src/services/mongoose-setup'));
                 }).toThrowError(
                     "ERROR 'Promise' does not exist!"
                 );
@@ -43,9 +43,9 @@ describe("Injector class test", function() {
                 Injector.addFactory('config', 
                     require('../config'));
                 Injector.addFactory('Promise', 
-                    require('../api/services/Promise'));
+                    require('../src/services/Promise'));
                 Injector.addFactory('mongoose-setup', 
-                    require('../api/services/mongoose-setup'));
+                    require('../src/services/mongoose-setup'));
                 done();
             });
         });
@@ -171,7 +171,7 @@ describe("Injector class test", function() {
             it("should ERROR", function(done) {
                 expect(function() {
                     Injector.addRoute('/chapter',
-                        require('../api/routes/statuteChapters'));
+                        require('../src/routes/statuteChapters'));
                 }).toThrowError(
                     "ERROR 'express' does not exist!"
                 );
@@ -181,12 +181,12 @@ describe("Injector class test", function() {
             // add route with depdencies
             it("should add route", function(done) {
                 Injector.addFactory('statuteModel', 
-                    require('../api/models/statuteModel'));
+                    require('../src/models/statuteModel'));
                 Injector.addFactory('express', require('express'));
                 Injector.addFactory('BrowseService', 
-                    require('../api/services/BrowseService'));
+                    require('../src/services/BrowseService'));
                 Injector.addRoute('/chapter',
-                    require('../api/routes/statuteChapters'));
+                    require('../src/routes/statuteChapters'));
                 done();
             });
 
