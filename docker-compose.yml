@@ -1,10 +1,16 @@
 version: '3'
 services:
-  app:
+  nginx:
+    build: ./nginx
+    links:
+      - node:node
+    ports:
+      - "80:80"
+  node:
     build: .
     command: node server.js
     ports:
-      - "3000:3000"
+      - "3000"
     environment:
       - MONGO_URI=${MONGO_URI}
       - ELASTIC_URI=${ELASTIC_URI}
