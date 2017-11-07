@@ -8,7 +8,7 @@
 
 let injector = new (require('./injector/Injector.js'))();
 
-// factories - references Object
+// services
 injector.addFactory('express', require('express'));
 injector.addFactory('bluebird', require('bluebird'));
 injector.addFactory('mongoose', require('mongoose'));
@@ -22,8 +22,6 @@ injector.addFactory('BrowseService', require('./services/BrowseService'));
 injector.addFactory('elastic_client', require('./services/elastic-setup'));
 injector.addFactory('SearchService', require('./services/SearchService'));
 injector.addFactory('LocationService', require('./services/LocationService'));
-
-// services - instantiates Object
 
 // routes
 injector.addRoute('/statutes', require('./routes/statutes'));
